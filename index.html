@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IICP - Client Presentation</title>
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a1a3d;
+            color: #fff;
+            overflow: hidden;
+        }
+        .slide-container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            transition: left 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        .slide-container.active {
+            left: 0;
+            opacity: 1;
+        }
+        .slide-content {
+            max-width: 1100px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideIn 0.8s ease-out;
+        }
+        .slide-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #facc15, #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        .slide-content h2 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #facc15;
+            margin-bottom: 1.2rem;
+        }
+        .slide-content p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+        }
+        .icon {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, #facc15, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .benefit-card {
+            background: #ffffff;
+            color: #1e3a8a;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-image: linear-gradient(45deg, #facc15, #f97316) 1;
+            animation: borderGlow 2s infinite;
+        }
+        .benefit-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .benefit-card i {
+            font-size: 2rem;
+            color: #f97316;
+            margin-bottom: 0.75rem;
+        }
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .benefit-card p {
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+        .btn {
+            background: linear-gradient(45deg, #f97316, #facc15);
+            color: #1e3a8a;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .price-highlight {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #facc15, #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 1.5rem 0;
+        }
+        .checklist {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .checklist li {
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        .checklist i {
+            color: #34d399;
+            margin-right: 0.75rem;
+        }
+        .progress-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            color: #facc15;
+            font-size: 0.95rem;
+        }
+        .controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+        .control-btn {
+            background: #facc15;
+            color: #1e3a8a;
+            padding: 0.5rem 1.2rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .control-btn:hover {
+            background: #f97316;
+        }
+        .autoplay-toggle, .export-btn {
+            background: #34d399;
+        }
+        .autoplay-toggle:hover, .export-btn:hover {
+            background: #2dd4bf;
+        }
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.4); opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(0.8); opacity: 0; }
+        }
+        .carousel {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 1.5rem auto;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            min-width: 100%;
+            background: #ffffff;
+            color: #1e3a8a;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-image {
+            width: 470px;
+            height: 394px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(249, 115, 22, 0.2));
+            opacity: 0.3;
+            border-radius: 1rem;
+        }
+        .profile-text {
+            max-width: 500px;
+            text-align: left;
+        }
+        .timeline {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .timeline-item i {
+            font-size: 1.5rem;
+            color: #facc15;
+            margin-right: 1rem;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes borderGlow {
+            0% { border-image: linear-gradient(45deg, #facc15, #f97316) 1; }
+            50% { border-image: linear-gradient(45deg, #f97316, #facc15) 1; }
+            100% { border-image: linear-gradient(45deg, #facc15, #f97316) 1; }
+        }
+        @media (max-width: 768px) {
+            .slide-content h1 {
+                font-size: 2.2rem;
+            }
+            .slide-content h2 {
+                font-size: 1.8rem;
+            }
+            .slide-content p {
+                font-size: 1rem;
+            }
+            .benefit-card {
+                padding: 1rem;
+            }
+            .icon {
+                font-size: 3.5rem;
+            }
+            .profile-image {
+                width: 100%;
+                height: auto;
+            }
+        }
+        @media (max-width: 480px) {
+            .slide-content {
+                padding: 2rem;
+            }
+            .slide-content h1 {
+                font-size: 1.8rem;
+            }
+            .slide-content h2 {
+                font-size: 1.5rem;
+            }
+            .progress-bar {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 25%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 2s; width: 8px; height: 8px;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4s; width: 6px; height: 6px;"></div>
+    </div>
+
+    <!-- Slide 1: Welcome -->
+    <div class="slide-container" role="region" aria-label="Welcome Slide">
+        <div class="slide-content">
+            <i class="fas fa-graduation-cap icon" aria-hidden="true"></i>
+            <h1>Dr. Sachin Ambekar's IICP</h1>
+            <p>Empowering the Next Generation of IT & Computer Industry Leaders through Industry Integrated Career Platform</p>
+            <a href="http://www.iicp.in" class="btn" aria-label="Explore IICP Website">Explore IICP</a>
+        </div>
+    </div>
+
+    <!-- Slide 2: About Dr. Sachin Ambekar -->
+    <div class="slide-container" role="region" aria-label="About Dr. Sachin Ambekar Slide">
+        <div class="slide-content">
+            <i class="fas fa-user-tie icon" aria-hidden="true"></i>
+            <h2>About Dr. Sachin Ambekar</h2>
+            <div class="profile-container">
+                <img src="https://sachinambekar.in/assets/images/untitled-design-18-940x788.webp" alt="Dr. Sachin Ambekar" class="profile-image">
+                <div class="profile-text">
+                    <p>Dr. Sachin Ambekar, with an MBA in Marketing & HR and a PhD in Management, brings 22 years of HR experience across IT, service, and manufacturing sectors. His expertise in corporate relations and placement shapes IICP’s mission to bridge education and industry.</p>
+                    <p>Author of 800+ publications and recognized as one of India’s renowned professionals in 2023, Dr. Ambekar’s vision is to empower students and institutes to thrive globally.</p>
+                    <div class="timeline">
+                        <div class="timeline-item"><i class="fas fa-briefcase"></i> 2003: Began HR career in IT</div>
+                        <div class="timeline-item"><i class="fas fa-graduation-cap"></i> 2010: Earned PhD in Management</div>
+                        <div class="timeline-item"><i class="fas fa-star"></i> 2023: Featured in CIO Outlook India</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Four-Phase Training Program -->
+    <div class="slide-container" role="region" aria-label="Training Program Slide">
+        <div class="slide-content">
+            <i class="fas fa-chalkboard-teacher icon" aria-hidden="true"></i>
+            <h2>Four-Phase Training Program</h2>
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-video" aria-hidden="true"></i>
+                    <h3>Live Lectures</h3>
+                    <p>2 hours monthly (2 sessions of 1 hour) for expert interview preparation.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-brain" aria-hidden="true"></i>
+                    <h3>Aptitude Tests</h3>
+                    <p>Continuous practice with 5,000+ questions to build confidence.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-file-alt" aria-hidden="true"></i>
+                    <h3>CV Building</h3>
+                    <p>Workshops to craft professional, job-ready resumes.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bell" aria-hidden="true"></i>
+                    <h3>Job Alerts</h3>
+                    <p>Real-time opportunities via WhatsApp and email.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: 360° Placement Support -->
+    <div class="slide-container" role="region" aria-label="Placement Support Slide">
+        <div class="slide-content">
+            <i class="fas fa-rocket icon" aria-hidden="true"></i>
+            <h2>360° Placement Support</h2>
+            <p>Comprehensive career preparation for industry success:</p>
+            <ul class="checklist">
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Industry Readiness Programs</li>
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Professional CV Building</li>
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Real-Time Job Alerts</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 5: Success Stories -->
+    <div class="slide-container" role="region" aria-label="Success Stories Slide">
+        <div class="slide-content">
+            <i class="fas fa-star icon" aria-hidden="true"></i>
+            <h2>Success Stories</h2>
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <p>"IICP’s interview sessions boosted my confidence to land my dream job!"</p>
+                        <p><strong>— Priya S., TechCorp</strong></p>
+                    </div>
+                    <div class="carousel-item">
+                        <p>"The job alerts and resume tips helped me secure multiple offers."</p>
+                        <p><strong>— Rohan K., Software Engineer</strong></p>
+                    </div>
+                    <div class="carousel-item">
+                        <p>"IICP’s aptitude training was key to my success."</p>
+                        <p><strong>— Anil T., Data Analyst</strong></p>
+                    </div>
+                </div>
+            </div>
+            <p>Over 10,000 placements with an 85% success rate in 2024!</p>
+        </div>
+    </div>
+
+    <!-- Slide 6: Our Impact -->
+    <div class="slide-container" role="region" aria-label="Our Impact Slide">
+        <div class="slide-content">
+            <i class="fas fa-trophy icon" aria-hidden="true"></i>
+            <h2>Our Impact</h2>
+            <p>IICP has transformed lives with:</p>
+            <ul class="checklist">
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>10,000+ successful placements</li>
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>85% placement rate in 2024</li>
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Trusted by students and institutes nationwide</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 7: Why Choose IICP? -->
+    <div class="slide-container" role="region" aria-label="Why Choose IICP Slide">
+        <div class="slide-content">
+            <i class="fas fa-gem icon" aria-hidden="true"></i>
+            <h2>Why Choose IICP?</h2>
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-user-check" aria-hidden="true"></i>
+                    <h3>Personalized Mentorship</h3>
+                    <p>Tailored guidance to unlock student potential.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-cogs" aria-hidden="true"></i>
+                    <h3>Cutting-Edge Training</h3>
+                    <p>Industry-relevant programs for real-world success.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-network-wired" aria-hidden="true"></i>
+                    <h3>Extensive Network</h3>
+                    <p>Connections with top IT companies for placements.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Pricing & Benefits -->
+    <div class="slide-container" role="region" aria-label="Pricing Slide">
+        <div class="slide-content">
+            <i class="fas fa-money-bill-wave icon" aria-hidden="true"></i>
+            <h2>Unbeatable Value at ₹1,000/Month</h2>
+            <p class="price-highlight">Only ₹1,000/Month</p>
+            <p>Additional Benefits:</p>
+            <ul class="checklist">
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Mock Interviews & Confidence Building</li>
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Customized Institutional Support</li>
+                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Proven Track Record: 10,000+ Placements</li>
+            </ul>
+            <a href="http://www.iicp.in" class="btn" aria-label="Join IICP Now">Join Now</a>
+        </div>
+    </div>
+
+    <!-- Slide 9: Contact Us -->
+    <div class="slide-container" role="region" aria-label="Contact Us Slide">
+        <div class="slide-content">
+            <i class="fas fa-envelope icon" aria-hidden="true"></i>
+            <h2>Contact Us</h2>
+            <p><i class="fas fa-globe" aria-hidden="true"></i> Website: <a href="http://www.iicp.in" class="underline">www.iicp.in</a></p>
+            <p><i class="fas fa-envelope" aria-hidden="true"></i> Email: info@iicp.in</p>
+            <p><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp: +919284157202</p>
+            <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Address: IICP Headquarters, PCMC, Pune, Maharashtra, India</p>
+            <a href="http://www.iicp.in" class="btn" aria-label="Get Started with IICP">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="control-btn" onclick="prevSlide()" aria-label="Previous Slide">Previous</button>
+        <button class="control-btn" onclick="nextSlide()" aria-label="Next Slide">Next</button>
+        <button class="control-btn autoplay-toggle" onclick="toggleAutoPlay()" aria-label="Toggle Auto-Play">Auto-Play: Off</button>
+        <button class="control-btn export-btn" onclick="exportPDF()" aria-label="Export as PDF">Export PDF</button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" role="status" aria-live="polite">Slide <span id="current-slide">1</span> of <span id="total-slides">9</span></div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-container');
+        const totalSlides = slides.length;
+        let autoPlayInterval = null;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            document.getElementById('current-slide').textContent = index + 1;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function toggleAutoPlay() {
+            const toggleBtn = document.querySelector('.autoplay-toggle');
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+                toggleBtn.textContent = 'Auto-Play: Off';
+            } else {
+                autoPlayInterval = setInterval(nextSlide, 5000);
+                toggleBtn.textContent = 'Auto-Play: On';
+            }
+        }
+
+        function exportPDF() {
+            window.print();
+        }
+
+        // Carousel Logic
+        const carouselInner = document.querySelector('.carousel-inner');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        let carouselIndex = 0;
+
+        function moveCarousel() {
+            carouselIndex = (carouselIndex + 1) % carouselItems.length;
+            carouselInner.style.transform = `translateX(-${carouselIndex * 100}%)`;
+        }
+
+        setInterval(moveCarousel, 3000);
+
+        // Initialize
+        showSlide(currentSlide);
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'p') exportPDF();
+        });
+    </script>
+</body>
+</html>
