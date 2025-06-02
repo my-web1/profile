@@ -3,161 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IICP - Client Presentation</title>
-    <!-- Font Awesome CDN for Icons -->
+    <title>IICP - Industry Integrated Career Platform</title>
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
         body {
             font-family: 'Poppins', sans-serif;
-            background: #0a1a3d;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             color: #fff;
+            overflow-x: hidden;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #facc15;
+        }
+        .header h1 {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: #facc15;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        .nav {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav a {
+            color: #d1d5db;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav a:hover {
+            color: #facc15;
+        }
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: #facc15;
+            cursor: pointer;
+        }
+        .nav-mobile {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: #1e3a8a;
+            flex-direction: column;
+            padding: 1rem;
+            z-index: 999;
+        }
+        .nav-mobile a {
+            color: #d1d5db;
+            font-size: 1rem;
+            padding: 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(250,204,21,0.2);
+        }
+        .nav-mobile a:hover {
+            color: #facc15;
+            background: rgba(250,204,21,0.1);
+        }
+        .container {
+            max-width: 95vw;
+            margin: 80px auto 20px;
+            padding: 0 clamp(1rem, 3vw, 2rem);
+        }
+        section {
+            padding: clamp(2rem, 5vw, 3rem) 0;
+            border: 3px solid transparent;
+            border-image: linear-gradient(45deg, #facc15, #f97316) 1;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            animation: borderGlow 3s infinite;
             overflow: hidden;
         }
-        .slide-container {
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            left: 100%;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            transition: left 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            opacity: 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .slide-container.active {
-            left: 0;
-            opacity: 1;
-        }
-        .slide-content {
-            max-width: 95vw;
-            width: 100%;
-            padding: clamp(0.8rem, 3vw, 1.5rem);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 1rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            animation: slideIn 0.8s ease-out;
-            margin: clamp(0.5rem, 2vw, 0.8rem);
-        }
-        .slide-content h1 {
-            font-size: clamp(1.4rem, 4.5vw, 2.8rem);
-            font-weight: 700;
+        section h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 800;
             background: linear-gradient(90deg, #facc15, #fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-align: center;
         }
-        .slide-content h2 {
-            font-size: clamp(1.2rem, 3.5vw, 2rem);
-            font-weight: 600;
+        section h2 {
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            font-weight: 700;
             color: #facc15;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
-        .slide-content p {
-            font-size: clamp(0.8rem, 2.2vw, 1rem);
-            line-height: 1.5;
+        section p {
+            font-size: clamp(0.85rem, 2.2vw, 1rem);
+            line-height: 1.6;
             color: #d1d5db;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
         .icon {
-            font-size: clamp(2.5rem, 7vw, 3.5rem);
+            font-size: clamp(2.5rem, 7vw, 3rem);
             background: linear-gradient(45deg, #facc15, #f97316);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
         }
         .benefit-grid, .testimonial-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.8rem;
-            margin: 0.8rem 0;
+            gap: 1rem;
+            margin: 1rem 0;
         }
         .benefit-card, .testimonial-card {
             background: #ffffff;
             color: #1e3a8a;
-            padding: clamp(0.6rem, 2vw, 0.8rem);
-            border-radius: 0.8rem;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            padding: clamp(0.8rem, 2.5vw, 1rem);
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
         .benefit-card:hover, .testimonial-card:hover {
-            transform: perspective(800px) rotateX(3deg) rotateY(3deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-        .benefit-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #facc15, #f97316) 1;
-            animation: borderGlow 2s infinite;
+            transform: scale(1.05);
         }
         .benefit-card i, .testimonial-card i {
-            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            font-size: clamp(1.4rem, 3.5vw, 1.6rem);
             color: #f97316;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
         .benefit-card h3, .testimonial-card h3 {
-            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: 600;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
         .benefit-card p, .testimonial-card p {
-            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             color: #4b5563;
         }
         .btn {
             background: linear-gradient(45deg, #f97316, #facc15);
             color: #1e3a8a;
-            padding: clamp(0.5rem, 2vw, 0.6rem) clamp(1rem, 3vw, 1.5rem);
-            border-radius: 1.5rem;
+            padding: clamp(0.6rem, 2.5vw, 0.8rem) clamp(1.2rem, 4vw, 2rem);
+            border-radius: 2rem;
             font-weight: 600;
             text-decoration: none;
             display: inline-block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             min-height: 44px;
             line-height: 1.2;
+            transition: transform 0.3s ease;
         }
         .btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         .whatsapp-btn {
             background: linear-gradient(45deg, #25D366, #128C7E);
             color: #fff;
-            padding: clamp(0.6rem, 2.5vw, 0.8rem) clamp(1.2rem, 4vw, 2rem);
             font-size: clamp(0.9rem, 2.2vw, 1.1rem);
         }
         .whatsapp-btn:hover {
             background: linear-gradient(45deg, #128C7E, #25D366);
         }
         .price-highlight {
-            font-size: clamp(1.6rem, 4.5vw, 2.3rem);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 700;
             background: linear-gradient(90deg, #facc15, #fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 0.8rem 0;
+            margin: 1rem 0;
+            text-align: center;
         }
         .checklist {
             text-align: left;
@@ -165,213 +206,141 @@
             margin: 0 auto;
         }
         .checklist li {
-            font-size: clamp(0.8rem, 2.2vw, 1rem);
-            margin-bottom: 0.4rem;
+            font-size: clamp(0.85rem, 2.2vw, 1rem);
+            margin-bottom: 0.5rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
         .checklist i {
             color: #34d399;
-            margin-right: 0.4rem;
-            font-size: clamp(0.8rem, 2vw, 1rem);
-        }
-        .progress-bar {
-            position: fixed;
-            bottom: clamp(0.5rem, 2vw, 0.8rem);
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            padding: clamp(0.3rem, 1.5vw, 0.4rem) clamp(0.6rem, 2vw, 0.8rem);
-            border-radius: 1rem;
-            color: #facc15;
-            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-            z-index: 100;
-        }
-        .controls {
-            position: fixed;
-            bottom: clamp(2rem, 5vw, 2.5rem);
-            right: clamp(0.5rem, 2vw, 0.8rem);
-            display: flex;
-            flex-wrap: wrap;
-            gap: clamp(0.3rem, 1vw, 0.5rem);
-            z-index: 100;
-        }
-        .control-btn {
-            background: #facc15;
-            color: #1e3a8a;
-            padding: clamp(0.3rem, 1.5vw, 0.4rem) clamp(0.6rem, 2vw, 0.8rem);
-            border-radius: 0.8rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s ease;
-            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .control-btn:hover {
-            background: #f97316;
-        }
-        .autoplay-toggle, .export-btn {
-            background: #34d399;
-        }
-        .autoplay-toggle:hover, .export-btn:hover {
-            background: #2dd4bf;
-        }
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 8s infinite linear;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0.4); opacity: 0.4; }
-            100% { transform: translateY(-10vh) scale(0.8); opacity: 0; }
-        }
-        .carousel {
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            max-width: 95%;
-            margin: 0.8rem auto;
-        }
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        .carousel-item {
-            min-width: 100%;
-            background: #ffffff;
-            color: #1e3a8a;
-            padding: clamp(0.6rem, 2vw, 0.8rem);
-            border-radius: 0.8rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-right: 0.5rem;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            margin-top: 0.2rem;
         }
         .profile-container {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 1rem;
             align-items: center;
             justify-content: center;
         }
         .profile-image {
             width: clamp(120px, 25vw, 180px);
             height: auto;
-            aspect-ratio: 470 / 394;
+            aspect-ratio: 470 / 288;
             object-fit: cover;
             border-radius: 50%;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
             border: 3px solid #facc15;
-        }
-        .profile-image::after {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            width: calc(100% + 12px);
-            height: calc(100% + 12px);
-            background: radial-gradient(circle, rgba(250, 204, 21, 0.3), transparent);
-            border-radius: 50%;
-            z-index: -1;
-        }
-        .profile-text {
-            max-width: 95%;
-            text-align: center;
+            box-shadow: 0 6px 20px rgba(250,204,21,0.3);
+            margin-bottom: 1rem;
         }
         .highlight {
             background: linear-gradient(90deg, #facc15, #f97316);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 600;
+            font-weight: 700;
         }
         .contact-info {
             max-width: 95%;
-            margin: 0.8rem auto;
+            margin: 1rem auto;
+            text-align: center;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(50px); }
+        .qr-code {
+            width: clamp(80px, 20vw, 100px);
+            margin: 1rem auto;
+            display: block;
+        }
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23facc15' fill-opacity='0.3' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            animation: wave 8s linear infinite;
+        }
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(250,204,21,0.4);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+            to { text-shadow: 0 2px 8px rgba(250,204,21,0.5); }
+        }
+        @keyframes wave {
+            0% { background-position: 0 0; }
+            100% { background-position: 1440px 0; }
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.4); opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes borderGlow {
-            0% { border-image: linear-gradient(45deg, #facc15, #f97316) 1; }
-            50% { border-image: linear-gradient(45deg, #f97316, #facc15) 1; }
-            100% { border-image: linear-gradient(45deg, #facc15, #f97316) 1; }
-        }
         @media (max-width: 768px) {
-            .slide-content {
-                padding: clamp(0.6rem, 2.5vw, 1rem);
+            .nav {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .nav-mobile.active {
+                display: flex;
+            }
+            .container {
+                margin-top: 60px;
             }
             .benefit-grid, .testimonial-grid {
                 grid-template-columns: 1fr;
             }
-            .profile-container {
-                flex-direction: column;
+            section {
+                padding: clamp(1.5rem, 4vw, 2rem) 0;
             }
         }
         @media (max-width: 480px) {
-            .slide-content {
-                padding: clamp(0.5rem, 2vw, 0.8rem);
-                margin: clamp(0.3rem, 1.5vw, 0.5rem);
+            .header {
+                padding: 0.4rem 0.75rem;
             }
-            .slide-content h1 {
-                font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+            .header h1 {
+                font-size: clamp(0.8rem, 1.8vw, 1rem);
             }
-            .slide-content h2 {
-                font-size: clamp(1rem, 3vw, 1.5rem);
+            section h1 {
+                font-size: clamp(1.4rem, 3.5vw, 1.8rem);
             }
-            .slide-content p {
+            section h2 {
+                font-size: clamp(1.1rem, 3vw, 1.5rem);
+            }
+            section p {
                 font-size: clamp(0.75rem, 2vw, 0.9rem);
             }
             .benefit-card, .testimonial-card {
                 padding: clamp(0.5rem, 1.8vw, 0.7rem);
             }
-            .carousel {
-                max-width: 98%;
-            }
-            .controls {
-                bottom: clamp(1.5rem, 4vw, 2rem);
-                right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .control-btn {
-                padding: clamp(0.2rem, 1.2vw, 0.3rem) clamp(0.5rem, 1.8vw, 0.7rem);
-                font-size: clamp(0.65rem, 1.6vw, 0.8rem);
-                min-height: 36px;
-            }
-            .progress-bar {
-                font-size: clamp(0.65rem, 1.6vw, 0.8rem);
-                padding: clamp(0.2rem, 1.2vw, 0.3rem) clamp(0.5rem, 1.8vw, 0.7rem);
-            }
         }
         @media (max-width: 360px) {
-            .slide-content {
-                padding: clamp(0.4rem, 1.8vw, 0.6rem);
-                margin: clamp(0.2rem, 1.2vw, 0.4rem);
-            }
-            .slide-content h1 {
-                font-size: clamp(1.2rem, 3.2vw, 1.6rem);
-            }
-            .slide-content h2 {
-                font-size: clamp(0.9rem, 2.8vw, 1.3rem);
+            section {
+                padding: clamp(1rem, 3vw, 1.5rem) 0;
             }
             .btn, .whatsapp-btn {
                 padding: clamp(0.4rem, 1.8vw, 0.5rem) clamp(0.8rem, 2.5vw, 1.2rem);
-                font-size: clamp(0.8rem, 2vw, 0.95rem);
+                font-size: clamp(0.7rem, 2vw, 0.85rem);
             }
         }
     </style>
@@ -381,281 +350,206 @@
     <div class="particles">
         <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
         <div class="particle" style="left: 25%; animation-delay: 1s;"></div>
-        <div class="particle" style="left: 40%; animation-delay: 2s; width: 5px; height: 5px;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 2s;"></div>
         <div class="particle" style="left: 60%; animation-delay: 3s;"></div>
         <div class="particle" style="left: 80%; animation-delay: 4s;"></div>
     </div>
 
-    <!-- Slide 1: Welcome -->
-    <div class="slide-container" role="region" aria-label="Welcome Slide">
-        <div class="slide-content">
-            <i class="fas fa-graduation-cap icon" aria-hidden="true"></i>
-            <h1>Dr. Sachin Ambekar's IICP</h1>
-            <p>Empowering the Next Generation of IT & Computer Industry Leaders through Industry Integrated Career Platform</p>
-            <a href="http://www.iicp.in" class="btn" aria-label="Explore IICP Website">Explore IICP</a>
+    <!-- Header -->
+    <div class="header">
+        <h1>IICP</h1>
+        <div class="nav">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#training">Training</a>
+            <a href="#placement">Placement</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#success">Success</a>
+            <a href="#pricing">Pricing & Contact</a>
+        </div>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
         </div>
     </div>
 
-    <!-- Slide 2: About Dr. Sachin Ambekar -->
-    <div class="slide-container" role="region" aria-label="About Dr. Sachin Ambekar Slide">
-        <div class="slide-content">
+    <!-- Mobile Navigation -->
+    <div class="nav-mobile">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#training">Training</a>
+        <a href="#placement">Placement</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#success">Success</a>
+        <a href="#pricing">Pricing & Contact</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home">
+            <i class="fas fa-home icon"></i>
+            <h1>Dr. Sachin Ambekar's IICP</h1>
+            <p>Welcome to the Industry Integrated Career Platform (IICP), a transformative initiative bridging education and industry. IICP empowers students to become IT and computer industry leaders through innovative training, personalized mentorship, and robust placement solutions.</p>
+            <a href="#about" class="btn">Learn More</a>
+            <div class="wave"></div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
             <h2>About Dr. Sachin Ambekar</h2>
             <div class="profile-container">
                 <img src="https://sachinambekar.in/assets/images/untitled-design-18-940x788.webp" alt="Dr. Sachin Ambekar" class="profile-image">
                 <div class="profile-text">
-                    <p>Dr. Sachin Ambekar, a visionary leader with <span class="highlight">MBAs in Marketing & HRM</span> and a <span class="highlight">PhD in Management</span>, excels in <span class="highlight">HR, digital marketing, and industry-academia integration</span>, empowering students and businesses with transformative career solutions.</p>
+                    <p>Dr. Sachin Ambekar, a visionary with <span class="highlight">MBAs in Marketing & HRM</span> and a <span class="highlight">PhD in Management</span>, is a trailblazer in <span class="highlight">human resources, digital marketing, and industry-academia integration</span>. His expertise drives transformative career solutions, empowering students with cutting-edge skills and institutes with unparalleled placement success. Renowned for strategic innovation, Dr. Ambekar crafts HR solutions, pioneers digital marketing strategies, and fosters synergies that redefine career pathways.</p>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="wave"></div>
+        </section>
 
-    <!-- Slide 3: Four-Phase Training Program -->
-    <div class="slide-container" role="region" aria-label="Training Program Slide">
-        <div class="slide-content">
-            <i class="fas fa-chalkboard-teacher icon" aria-hidden="true"></i>
+        <!-- Training Section -->
+        <section id="training">
+            <i class="fas fa-chalkboard-teacher icon"></i>
             <h2>Four-Phase Training Program</h2>
+            <p>IICP’s structured training ensures students are industry-ready with a comprehensive four-phase approach.</p>
             <div class="benefit-grid">
                 <div class="benefit-card">
-                    <i class="fas fa-video" aria-hidden="true"></i>
+                    <i class="fas fa-video"></i>
                     <h3>Live Lectures</h3>
-                    <p>2 hours monthly (2 sessions of 1 hour) for expert interview preparation.</p>
+                    <p>Two 1-hour monthly sessions deliver expert-led interview preparation, focusing on communication, technical skills, and confidence for IT roles.</p>
                 </div>
                 <div class="benefit-card">
-                    <i class="fas fa-brain" aria-hidden="true"></i>
+                    <i class="fas fa-brain"></i>
                     <h3>Aptitude Tests</h3>
-                    <p>Continuous practice with 5,000+ questions to build confidence.</p>
+                    <p>Over 5,000 practice questions across quantitative, logical, and verbal domains, designed to eliminate exam fears and boost performance.</p>
                 </div>
                 <div class="benefit-card">
-                    <i class="fas fa-file-alt" aria-hidden="true"></i>
+                    <i class="fas fa-file-alt"></i>
                     <h3>CV Building</h3>
-                    <p>Workshops to craft professional, job-ready resumes.</p>
+                    <p>Workshops create ATS-friendly, professional resumes that highlight skills and attract top employers.</p>
                 </div>
                 <div class="benefit-card">
-                    <i class="fas fa-bell" aria-hidden="true"></i>
+                    <i class="fas fa-bell"></i>
                     <h3>Job Alerts</h3>
-                    <p>Real-time opportunities via WhatsApp and email.</p>
+                    <p>Real-time notifications via WhatsApp and email keep students updated on tailored job opportunities.</p>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="wave"></div>
+        </section>
 
-    <!-- Slide 4: 360° Placement Support -->
-    <div class="slide-container" role="region" aria-label="Placement Support Slide">
-        <div class="slide-content">
-            <i class="fas fa-rocket icon" aria-hidden="true"></i>
+        <!-- Placement Section -->
+        <section id="placement">
+            <i class="fas fa-rocket icon"></i>
             <h2>360° Placement Support</h2>
-            <p>Comprehensive career preparation for industry success:</p>
+            <p>Holistic career preparation ensures students secure their dream jobs with comprehensive support.</p>
             <ul class="checklist">
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Industry Readiness Programs</li>
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Professional CV Building</li>
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Real-Time Job Alerts</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Industry Readiness</span>: Align skills with IT industry standards for real-world success.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Professional CV Building</span>: Craft resumes that stand out to top recruiters.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Real-Time Job Alerts</span>: Stay ahead with instant job notifications.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Mock Interviews</span>: Simulated sessions with feedback to enhance confidence.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Career Counseling</span>: Personalized guidance to tailor career paths.</li>
             </ul>
-        </div>
-    </div>
+            <div class="wave"></div>
+        </section>
 
-    <!-- Slide 5: Success Stories -->
-    <div class="slide-container" role="region" aria-label="Success Stories Slide">
-        <div class="slide-content">
-            <i class="fas fa-star icon" aria-hidden="true"></i>
+        <!-- Benefits Section -->
+        <section id="benefits">
+            <i class="fas fa-university icon"></i>
+            <h2>Benefits for Institutes</h2>
+            <p>Partnering with IICP transforms institutes into hubs of career excellence.</p>
+            <ul class="checklist">
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Enhanced Placement Rates</span>: Achieve up to 85% success, as seen in 2024 with 10,000+ placements.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Industry Connections</span>: Leverage IICP’s network with top IT firms for exclusive opportunities.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Cost-Effective Training</span>: ₹1,000/month maximizes ROI for institutes.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Tailored Programs</span>: Customized training aligns with institute curricula and industry needs.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Reputation Boost</span>: Elevate institute prestige with high placement outcomes.</li>
+                <li><i class="fas fa-check-circle"></i><span class="highlight">Student Satisfaction</span>: Job-ready graduates increase enrollment and loyalty.</li>
+            </ul>
+            <div class="wave"></div>
+        </section>
+
+        <!-- Success Section -->
+        <section id="success">
+            <i class="fas fa-star icon"></i>
             <h2>Success Stories</h2>
-            <div class="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item">
-                        <p>"IICP’s interview sessions boosted my confidence to land my dream job!"</p>
-                        <p><strong>— Priya S., TechCorp</strong></p>
-                    </div>
-                    <div class="carousel-item">
-                        <p>"The job alerts and resume tips helped me secure multiple offers."</p>
-                        <p><strong>— Rohan K., Software Engineer</strong></p>
-                    </div>
-                    <div class="carousel-item">
-                        <p>"IICP’s aptitude training was key to my success."</p>
-                        <p><strong>— Anil T., Data Analyst</strong></p>
-                    </div>
-                </div>
-            </div>
-            <p>Over 10,000 placements with an 85% success rate in 2024!</p>
-        </div>
-    </div>
-
-    <!-- Slide 6: Client Testimonials -->
-    <div class="slide-container" role="region" aria-label="Client Testimonials Slide">
-        <div class="slide-content">
-            <i class="fas fa-quote-left icon" aria-hidden="true"></i>
-            <h2>Client Testimonials</h2>
+            <p>IICP has empowered thousands of students to achieve their career dreams.</p>
             <div class="testimonial-grid">
                 <div class="testimonial-card">
-                    <i class="fas fa-user" aria-hidden="true"></i>
-                    <h3>Amit Deshmukh</h3>
-                    <p>"IICP’s training transformed our students’ career prospects."</p>
+                    <i class="fas fa-quote-left"></i>
+                    <h3>Priya S.</h3>
+                    <p>“IICP’s interview training turned my nervousness into confidence, landing me a role at TechCorp!”</p>
                 </div>
                 <div class="testimonial-card">
-                    <i class="fas fa-user" aria-hidden="true"></i>
-                    <h3>Neha Sharma</h3>
-                    <p>"The job alerts were a game-changer for our institute."</p>
+                    <i class="fas fa-quote-left"></i>
+                    <h3>Rohan K.</h3>
+                    <p>“The job alerts were spot-on, helping me secure multiple offers in weeks.”</p>
                 </div>
                 <div class="testimonial-card">
-                    <i class="fas fa-user" aria-hidden="true"></i>
-                    <h3>Rajesh Patil</h3>
-                    <p>"Dr. Ambekar’s expertise elevated our placement rates."</p>
+                    <i class="fas fa-quote-left"></i>
+                    <h3>Anil T.</h3>
+                    <p>“IICP’s aptitude practice was key to cracking my recruitment test.”</p>
                 </div>
             </div>
-        </div>
-    </div>
+            <p><strong>Impact</strong>: Over 10,000 placements in 2024 with an 85% success rate!</p>
+            <div class="wave"></div>
+        </section>
 
-    <!-- Slide 7: Our Impact -->
-    <div class="slide-container" role="region" aria-label="Our Impact Slide">
-        <div class="slide-content">
-            <i class="fas fa-trophy icon" aria-hidden="true"></i>
-            <h2>Our Impact</h2>
-            <p>IICP has transformed lives with:</p>
-            <ul class="checklist">
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>10,000+ successful placements</li>
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>85% placement rate in 2024</li>
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Trusted by students and institutes nationwide</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Slide 8: Why Choose IICP? -->
-    <div class="slide-container" role="region" aria-label="Why Choose IICP Slide">
-        <div class="slide-content">
-            <i class="fas fa-gem icon" aria-hidden="true"></i>
-            <h2>Why Choose IICP?</h2>
-            <div class="benefit-grid">
-                <div class="benefit-card">
-                    <i class="fas fa-user-check" aria-hidden="true"></i>
-                    <h3>Personalized Mentorship</h3>
-                    <p>Tailored guidance to unlock student potential.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-cogs" aria-hidden="true"></i>
-                    <h3>Cutting-Edge Training</h3>
-                    <p>Industry-relevant programs for real-world success.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-network-wired" aria-hidden="true"></i>
-                    <h3>Extensive Network</h3>
-                    <p>Connections with top IT companies for placements.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 9: Pricing & Benefits -->
-    <div class="slide-container" role="region" aria-label="Pricing Slide">
-        <div class="slide-content">
-            <i class="fas fa-money-bill-wave icon" aria-hidden="true"></i>
-            <h2>Unbeatable Value at ₹1,000/Month</h2>
+        <!-- Pricing & Contact Section -->
+        <section id="pricing">
+            <i class="fas fa-money-bill-wave icon"></i>
+            <h2>Pricing & Contact</h2>
             <p class="price-highlight">Only ₹1,000/Month</p>
-            <p>Additional Benefits:</p>
+            <p>Unbeatable value for comprehensive career solutions, delivering high ROI for institutes.</p>
             <ul class="checklist">
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Mock Interviews & Confidence Building</li>
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Customized Institutional Support</li>
-                <li><i class="fas fa-check-circle" aria-hidden="true"></i>Proven Track Record: 10,000+ Placements</li>
+                <li><i class="fas fa-check-circle"></i>Four-phase training program.</li>
+                <li><i class="fas fa-check-circle"></i>360° placement support with mock interviews.</li>
+                <li><i class="fas fa-check-circle"></i>Proven track record: 10,000+ placements.</li>
             </ul>
-            <a href="http://www.iicp.in" class="btn" aria-label="Join IICP Now">Join Now</a>
-        </div>
-    </div>
-
-    <!-- Slide 10: Contact Us -->
-    <div class="slide-container" role="region" aria-label="Contact Us Slide">
-        <div class="slide-content">
-            <i class="fas fa-envelope icon" aria-hidden="true"></i>
-            <h2>Contact Us</h2>
             <div class="contact-info">
-                <p><i class="fas fa-globe" aria-hidden="true"></i> Website: <a href="http://www.iicp.in" class="underline">www.iicp.in</a></p>
-                <p><i class="fas fa-envelope" aria-hidden="true"></i> Email: info@iicp.in</p>
-                <p><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp: +919284157202</p>
-                <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Address: IICP Headquarters, PCMC, Pune, Maharashtra, India</p>
-                <a href="https://wa.me/919284157202" class="btn whatsapp-btn" aria-label="Contact via WhatsApp" target="_blank">Contact via WhatsApp</a>
+                <p><i class="fas fa-globe"></i> Website: <a href="http://www.iicp.in" class="underline">www.iicp.in</a></p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:info@iicp.in" class="underline">info@iicp.in</a></p>
+                <p><i class="fab fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/919284157202" class="underline">+919284157202</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Address: IICP Headquarters, PCMC, Pune, Maharashtra, India</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/919284157202" alt="WhatsApp QR Code" class="qr-code">
+                <p><small>Scan to Contact via WhatsApp</small></p>
+                <a href="https://wa.me/919284157202" class="btn whatsapp-btn" target="_blank">Contact via WhatsApp</a>
             </div>
-        </div>
+            <div class="wave"></div>
+        </section>
     </div>
-
-    <!-- Controls -->
-    <div class="controls">
-        <button class="control-btn" onclick="prevSlide()" aria-label="Previous Slide">Previous</button>
-        <button class="control-btn" onclick="nextSlide()" aria-label="Next Slide">Next</button>
-        <button class="control-btn autoplay-toggle" onclick="toggleAutoPlay()" aria-label="Toggle Auto-Play">Auto-Play: Off</button>
-        <button class="control-btn export-btn" onclick="exportPDF()" aria-label="Export as PDF">Export PDF</button>
-    </div>
-
-    <!-- Progress Bar -->
-    <div class="progress-bar" role="status" aria-live="polite">Slide <span id="current-slide">1</span> of <span id="total-slides">10</span></div>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide-container');
-        const totalSlides = slides.length;
-        let autoPlayInterval = null;
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMobile = document.querySelector('.nav-mobile');
+        hamburger.addEventListener('click', () => {
+            navMobile.classList.toggle('active');
+            hamburger.innerHTML = navMobile.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('.nav a, .nav-mobile a').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+                navMobile.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             });
-            document.getElementById('current-slide').textContent = index + 1;
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function toggleAutoPlay() {
-            const toggleBtn = document.querySelector('.autoplay-toggle');
-            if (autoPlayInterval) {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = null;
-                toggleBtn.textContent = 'Auto-Play: Off';
-            } else {
-                autoPlayInterval = setInterval(nextSlide, 5000);
-                toggleBtn.textContent = 'Auto-Play: On';
-            }
-        }
-
-        function exportPDF() {
-            window.print();
-        }
-
-        // Carousel Logic
-        const carouselInner = document.querySelector('.carousel-inner');
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        let carouselIndex = 0;
-
-        function moveCarousel() {
-            carouselIndex = (carouselIndex + 1) % carouselItems.length;
-            carouselInner.style.transform = `translateX(-${carouselIndex * 100}%)`;
-        }
-
-        setInterval(moveCarousel, 3600);
-
-        // Initialize
-        showSlide(currentSlide);
-        document.getElementById('total-slides').textContent = totalSlides;
-
-        // Keyboard and Touch Navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-            if (e.key === 'p') exportPDF();
         });
 
-        // Swipe support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            if (touchEndX < touchStartX - 50) nextSlide();
-            if (touchEndX > touchStartX + 50) prevSlide();
+        // Fade-In Animation on Scroll
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 1s ease-out forwards';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            section.style.opacity = 0;
+            observer.observe(section);
         });
     </script>
 </body>
