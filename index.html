@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IICP - Client Presentation</title>
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -33,71 +33,72 @@
             transition: left 0.5s ease-in-out, opacity 0.5s ease-in-out;
             opacity: 0;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .slide-container.active {
             left: 0;
             opacity: 1;
         }
         .slide-content {
-            max-width: 90vw;
+            max-width: 95vw;
             width: 100%;
-            padding: 2rem;
+            padding: clamp(0.8rem, 3vw, 1.5rem);
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 1.5rem;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             text-align: center;
             animation: slideIn 0.8s ease-out;
-            margin: 1rem;
+            margin: clamp(0.5rem, 2vw, 0.8rem);
         }
         .slide-content h1 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-size: clamp(1.4rem, 4.5vw, 2.8rem);
             font-weight: 700;
             background: linear-gradient(90deg, #facc15, #fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .slide-content h2 {
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-size: clamp(1.2rem, 3.5vw, 2rem);
             font-weight: 600;
             color: #facc15;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .slide-content p {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            line-height: 1.6;
+            font-size: clamp(0.8rem, 2.2vw, 1rem);
+            line-height: 1.5;
             color: #d1d5db;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .icon {
-            font-size: clamp(3rem, 8vw, 4rem);
+            font-size: clamp(2.5rem, 7vw, 3.5rem);
             background: linear-gradient(45deg, #facc15, #f97316);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .benefit-grid, .testimonial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin: 0.8rem 0;
         }
         .benefit-card, .testimonial-card {
             background: #ffffff;
             color: #1e3a8a;
-            padding: 1rem;
-            border-radius: 1rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            padding: clamp(0.6rem, 2vw, 0.8rem);
+            border-radius: 0.8rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
         }
         .benefit-card:hover, .testimonial-card:hover {
-            transform: perspective(1000px) rotateX(3deg) rotateY(3deg);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: perspective(800px) rotateX(3deg) rotateY(3deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         .benefit-card::before {
             content: '';
@@ -111,28 +112,30 @@
             animation: borderGlow 2s infinite;
         }
         .benefit-card i, .testimonial-card i {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
             color: #f97316;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
         .benefit-card h3, .testimonial-card h3 {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
         .benefit-card p, .testimonial-card p {
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
             color: #4b5563;
         }
         .btn {
             background: linear-gradient(45deg, #f97316, #facc15);
             color: #1e3a8a;
-            padding: 0.6rem 1.5rem;
+            padding: clamp(0.5rem, 2vw, 0.6rem) clamp(1rem, 3vw, 1.5rem);
             border-radius: 1.5rem;
             font-weight: 600;
             text-decoration: none;
             display: inline-block;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 44px;
+            line-height: 1.2;
         }
         .btn:hover {
             transform: scale(1.1);
@@ -141,65 +144,71 @@
         .whatsapp-btn {
             background: linear-gradient(45deg, #25D366, #128C7E);
             color: #fff;
-            padding: 0.8rem 2rem;
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            padding: clamp(0.6rem, 2.5vw, 0.8rem) clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
         }
         .whatsapp-btn:hover {
             background: linear-gradient(45deg, #128C7E, #25D366);
         }
         .price-highlight {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-size: clamp(1.6rem, 4.5vw, 2.3rem);
             font-weight: 700;
             background: linear-gradient(90deg, #facc15, #fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 1rem 0;
+            margin: 0.8rem 0;
         }
         .checklist {
             text-align: left;
-            max-width: 90%;
+            max-width: 95%;
             margin: 0 auto;
         }
         .checklist li {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            margin-bottom: 0.5rem;
+            font-size: clamp(0.8rem, 2.2vw, 1rem);
+            margin-bottom: 0.4rem;
             display: flex;
             align-items: center;
         }
         .checklist i {
             color: #34d399;
-            margin-right: 0.5rem;
+            margin-right: 0.4rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
         }
         .progress-bar {
             position: fixed;
-            bottom: 1rem;
+            bottom: clamp(0.5rem, 2vw, 0.8rem);
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 1.5rem;
+            padding: clamp(0.3rem, 1.5vw, 0.4rem) clamp(0.6rem, 2vw, 0.8rem);
+            border-radius: 1rem;
             color: #facc15;
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
             z-index: 100;
         }
         .controls {
             position: fixed;
-            top: 1rem;
-            right: 1rem;
+            bottom: clamp(2rem, 5vw, 2.5rem);
+            right: clamp(0.5rem, 2vw, 0.8rem);
             display: flex;
-            gap: 0.5rem;
+            flex-wrap: wrap;
+            gap: clamp(0.3rem, 1vw, 0.5rem);
             z-index: 100;
         }
         .control-btn {
             background: #facc15;
             color: #1e3a8a;
-            padding: 0.4rem 1rem;
-            border-radius: 1rem;
+            padding: clamp(0.3rem, 1.5vw, 0.4rem) clamp(0.6rem, 2vw, 0.8rem);
+            border-radius: 0.8rem;
             cursor: pointer;
             font-weight: 600;
             transition: background 0.3s ease;
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .control-btn:hover {
             background: #f97316;
@@ -221,9 +230,9 @@
         }
         .particle {
             position: absolute;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.4);
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             animation: float 8s infinite linear;
         }
@@ -235,8 +244,8 @@
             overflow: hidden;
             position: relative;
             width: 100%;
-            max-width: 90%;
-            margin: 1rem auto;
+            max-width: 95%;
+            margin: 0.8rem auto;
         }
         .carousel-inner {
             display: flex;
@@ -246,56 +255,40 @@
             min-width: 100%;
             background: #ffffff;
             color: #1e3a8a;
-            padding: 1rem;
-            border-radius: 1rem;
+            padding: clamp(0.6rem, 2vw, 0.8rem);
+            border-radius: 0.8rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         .profile-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
+            flex-direction: column;
+            gap: 0.8rem;
             align-items: center;
             justify-content: center;
         }
         .profile-image {
-            width: clamp(200px, 30vw, 300px);
+            width: clamp(120px, 25vw, 180px);
             height: auto;
             aspect-ratio: 470 / 394;
             object-fit: cover;
             border-radius: 50%;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            border: 4px solid #facc15;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border: 3px solid #facc15;
         }
         .profile-image::after {
             content: '';
             position: absolute;
-            top: -8px;
-            left: -8px;
-            width: calc(100% + 16px);
-            height: calc(100% + 16px);
+            top: -6px;
+            left: -6px;
+            width: calc(100% + 12px);
+            height: calc(100% + 12px);
             background: radial-gradient(circle, rgba(250, 204, 21, 0.3), transparent);
             border-radius: 50%;
             z-index: -1;
         }
         .profile-text {
-            max-width: 90%;
-            text-align: left;
-        }
-        .timeline {
-            margin-top: 1rem;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-        }
-        .timeline-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        .timeline-item i {
-            font-size: 1.2rem;
-            color: #facc15;
-            margin-right: 0.5rem;
+            max-width: 95%;
+            text-align: center;
         }
         .highlight {
             background: linear-gradient(90deg, #facc15, #f97316);
@@ -305,8 +298,8 @@
             font-weight: 600;
         }
         .contact-info {
-            max-width: 90%;
-            margin: 1rem auto;
+            max-width: 95%;
+            margin: 0.8rem auto;
         }
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(50px); }
@@ -319,38 +312,66 @@
         }
         @media (max-width: 768px) {
             .slide-content {
-                padding: 1.5rem;
-            }
-            .slide-content h1 {
-                font-size: clamp(1.6rem, 4vw, 2.2rem);
-            }
-            .slide-content h2 {
-                font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+                padding: clamp(0.6rem, 2.5vw, 1rem);
             }
             .benefit-grid, .testimonial-grid {
                 grid-template-columns: 1fr;
             }
-            .profile-image {
-                width: clamp(150px, 25vw, 200px);
+            .profile-container {
+                flex-direction: column;
             }
         }
         @media (max-width: 480px) {
             .slide-content {
-                padding: 1rem;
-                margin: 0.5rem;
+                padding: clamp(0.5rem, 2vw, 0.8rem);
+                margin: clamp(0.3rem, 1.5vw, 0.5rem);
             }
             .slide-content h1 {
-                font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+                font-size: clamp(1.3rem, 3.5vw, 1.8rem);
             }
             .slide-content h2 {
-                font-size: clamp(1.1rem, 3vw, 1.5rem);
+                font-size: clamp(1rem, 3vw, 1.5rem);
             }
-            .progress-bar {
-                font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+            .slide-content p {
+                font-size: clamp(0.75rem, 2vw, 0.9rem);
+            }
+            .benefit-card, .testimonial-card {
+                padding: clamp(0.5rem, 1.8vw, 0.7rem);
+            }
+            .carousel {
+                max-width: 98%;
+            }
+            .controls {
+                bottom: clamp(1.5rem, 4vw, 2rem);
+                right: clamp(0.3rem, 1.5vw, 0.5rem);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             .control-btn {
-                padding: 0.3rem 0.8rem;
-                font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+                padding: clamp(0.2rem, 1.2vw, 0.3rem) clamp(0.5rem, 1.8vw, 0.7rem);
+                font-size: clamp(0.65rem, 1.6vw, 0.8rem);
+                min-height: 36px;
+            }
+            .progress-bar {
+                font-size: clamp(0.65rem, 1.6vw, 0.8rem);
+                padding: clamp(0.2rem, 1.2vw, 0.3rem) clamp(0.5rem, 1.8vw, 0.7rem);
+            }
+        }
+        @media (max-width: 360px) {
+            .slide-content {
+                padding: clamp(0.4rem, 1.8vw, 0.6rem);
+                margin: clamp(0.2rem, 1.2vw, 0.4rem);
+            }
+            .slide-content h1 {
+                font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+            }
+            .slide-content h2 {
+                font-size: clamp(0.9rem, 2.8vw, 1.3rem);
+            }
+            .btn, .whatsapp-btn {
+                padding: clamp(0.4rem, 1.8vw, 0.5rem) clamp(0.8rem, 2.5vw, 1.2rem);
+                font-size: clamp(0.8rem, 2vw, 0.95rem);
             }
         }
     </style>
@@ -358,11 +379,11 @@
 <body>
     <!-- Particles Background -->
     <div class="particles">
-        <div class="particle" style="left: 10%; animation-delay: 0s; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
         <div class="particle" style="left: 25%; animation-delay: 1s;"></div>
-        <div class="particle" style="left: 40%; animation-delay: 2s; width: 6px; height: 6px;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 2s; width: 5px; height: 5px;"></div>
         <div class="particle" style="left: 60%; animation-delay: 3s;"></div>
-        <div class="particle" style="left: 80%; animation-delay: 4s; width: 5px; height: 5px;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4s;"></div>
     </div>
 
     <!-- Slide 1: Welcome -->
@@ -382,13 +403,7 @@
             <div class="profile-container">
                 <img src="https://sachinambekar.in/assets/images/untitled-design-18-940x788.webp" alt="Dr. Sachin Ambekar" class="profile-image">
                 <div class="profile-text">
-                    <p>Dr. Sachin Ambekar, <span class="highlight">MBA in Marketing & HRM, PhD in Management</span>, brings 22 years of expertise to IICP. From <span class="highlight">2003–2011</span>, he held senior roles in HR and Operations across Manufacturing, Service, and IT, optimizing processes and boosting performance.</p>
-                    <p>As <span class="highlight">Professor and Head of Corporate Relations</span> (2011–2017), he forged industry-academic partnerships to enhance student employability. Since <span class="highlight">2017</span>, he leads a 360 digital marketing venture and consults in Food, IT, and Service sectors, driving sustainable growth.</p>
-                    <div class="timeline">
-                        <div class="timeline-item"><i class="fas fa-briefcase" aria-hidden="true"></i> 2003–2011: Senior Management in HR & Operations</div>
-                        <div class="timeline-item"><i class="fas fa-graduation-cap" aria-hidden="true"></i> 2011–2017: Professor & Corporate Relations Head</div>
-                        <div class="timeline-item"><i class="fas fa-star" aria-hidden="true"></i> 2017–Present: Entrepreneur & Digital Marketing Expert</div>
-                    </div>
+                    <p>Dr. Sachin Ambekar, a visionary leader with <span class="highlight">MBAs in Marketing & HRM</span> and a <span class="highlight">PhD in Management</span>, excels in <span class="highlight">HR, digital marketing, and industry-academia integration</span>, empowering students and businesses with transformative career solutions.</p>
                 </div>
             </div>
         </div>
@@ -624,11 +639,23 @@
         showSlide(currentSlide);
         document.getElementById('total-slides').textContent = totalSlides;
 
-        // Keyboard Navigation
+        // Keyboard and Touch Navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
             if (e.key === 'p') exportPDF();
+        });
+
+        // Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
         });
     </script>
 </body>
